@@ -81,10 +81,6 @@ label {
   flex-direction: column;
 }
 
-img {
-  width: 100%;
-}
-
 .navigation {
   display: flex;
   flex-direction: column;
@@ -129,13 +125,17 @@ img {
   border: 3px solid black;
   border-radius: 15px;
   overflow: hidden;
-  margin-top: 1rem; 
+  margin: 1rem 0; 
 }
 
 .meme {
   position: relative;
   display: flex;
   justify-content: center;
+}
+
+img {
+  width: 100%;
 }
 
 .overlay {
