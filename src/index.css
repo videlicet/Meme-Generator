@@ -8,12 +8,38 @@ html {
   height: 100vh;
 }
 
+.page-container {
+  display: flex;
+  padding: 3rem 3rem;
+  margin: auto;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  background: rgb(34,193,195);
+  background: linear-gradient(16deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%); 
+  border-top-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+h1 {
+  border-radius: 15px;
+  background-color: black;
+  color: white;
+  width: 100%;
+  text-align: center;
+  padding: 0.3rem;
+}
+
 button {
-  border: none;
+  border: 3px dotted black;
   border-radius: 15px;
   background-color: white;
   padding: 0.3rem 0.6rem;
   margin: 0.3rem 0.3rem;
+}
+
+button:hover {
+  background-color: grey;
 }
 
 input[type='text'] {
@@ -23,49 +49,117 @@ input[type='text'] {
 }
 
 input[type='submit'] {
-  border: none;
   border-radius: 15px;
+  border: 3px dotted black;
   background-color: white;
   padding: 0.3rem 0.6rem;
   margin: 0.3rem 0.3rem;
   width: 5rem;
 }
 
-.page-container {
-  display: flex;
-  padding: 3rem 3rem;
-  margin: auto;
-  flex-direction: column;
-  align-items: center;
-  width: 50%;
-  background-color: lightgrey;
-}
-
-h1 {
-  border-radius: 15px;
-  background-color: black;
-  color: white;
-  padding: 0.3rem 0.6rem;
+input[type='submit']:hover {
+  background-color: grey;
 }
 
 form {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
   width: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+  border: 3px solid black;
+  border-radius: 15px;
+}
+
+label {
+  margin-bottom: 0.5rem;
+}
+
+.text-input {
+  display: flex;
+  flex-direction: column;
 }
 
 img {
-  margin: 2rem;
-  width: 80%;
-}
-
-.super {
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  width: 100%;
 }
 
 .navigation {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.interaction {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+  border: 3px solid black;
+  border-radius: 15px;
+}
+
+.upload {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  
+}
+
+.upload button {
+  width: 4rem;
+}
+
+.download {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.download button {
+  width: 5rem;
+}
+
+.border {
+  border: 3px solid black;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-top: 1rem; 
+}
+
+.meme {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.overlay {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  color: white;
+  opacity: 1;
+}
+
+.text {
+  display: block;
+  width: 100%;
+  overflow-wrap: break-word;
+  margin: 2rem;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: xxx-large;
+  text-align: center;
+  text-shadow: -1px 1px 0 #000,
+  1px 1px 0 #000,
+  1px -1px 0 #000,
+  -1px -1px 0 #000;
 }
