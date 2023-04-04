@@ -11,7 +11,6 @@ function App() {
   const [textTwo, setTextTwo] = useState('');
   const [currentMeme, setCurrentMeme] = useState(0);
 
-
   const getData = async () => {
     try {
       const response = await axios.get(
@@ -41,20 +40,13 @@ function App() {
 			{
 				form: {
 					template_id: '181913649',
-					username: 'user99990',
-					password: 'Lgn7H96ReMmZtmc',
-					text0: 'hello',
-					text1: 'there',
+					username: 'USERNAME',
+					password: 'PASSWORD',
+					text0: 'text0',
+					text1: 'text1',
 				},
 			}
 		)
-    // axios.post('https://api.imgflip.com/caption_image', {
-    //   username: 'user99990',
-    //   password: 'Lgn7H96ReMmZtmc',
-    //   template_id: '181913649', //memes[currentMeme].id
-    //   text0: textOne,
-    //   text1: textTwo
-    // })
     .then(function (response) {
       console.log(response);
     })
@@ -122,8 +114,8 @@ function App() {
           <input onChange={handleChangeOne} name='above' type='text' value={textOne}></input>
         </div>
         <div className='text-input'>
-        <label htmlFor='below'>Text below: </label>
-        <input onChange={handleChangeTwo} name='below' type='text' value={textTwo}></input><br/>
+         <label htmlFor='below'>Text below: </label>
+          <input onChange={handleChangeTwo} name='below' type='text' value={textTwo}></input><br/>
         </div>
         <input type='submit' value='generate'></input>
       </form>
@@ -144,11 +136,9 @@ function App() {
             <br/>
             <button  onClick={onDownload} name='file-download'>download</button>
           </label>    
-
         </div>
       </div>
 
-      
       {loading && <span>Loading</span>}
         {memes[currentMeme] && <div className='border'>
         <div className='meme' id='meme'>
