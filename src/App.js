@@ -58,11 +58,11 @@ function App() {
   }
 
   function handleChangeOne(event) {
-    setTextOne(event.target.value);
+    setTextOne(event.target.value.toUpperCase());
   }
 
   function handleChangeTwo(event) {
-    setTextTwo(event.target.value);
+    setTextTwo(event.target.value.toUpperCase());
   }
 
   function onPrevious() {
