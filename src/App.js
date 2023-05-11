@@ -3,164 +3,233 @@ import './App.css';
 import domtoimage from 'dom-to-image';
 import axios from 'axios';
 
+import { username, password } from './credentials';
+
 function App() {
-  const [memes, setMemes] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [textOne, setTextOne] = useState('');
-  const [textTwo, setTextTwo] = useState('');
-  const [currentMeme, setCurrentMeme] = useState(0);
+    const [memes, setMemes] = useState();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [text, setText] = useState({});
+    const [currentMeme, setCurrentMeme] = useState(0);
+    const [customMeme, setCustomMeme] = useState();
 
-  const getData = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.imgflip.com/get_memes`
-      );
-      console.log(response.data)
-      console.log(response.data.data.memes)
-      setMemes(response.data.data.memes);
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-      setMemes(null);
-    } finally {
-      setLoading(false);
+    const getData = async () => {
+        try {
+            const response = await axios.get(
+                `https://api.imgflip.com/get_memes`
+            );
+            console.log(response.data);
+            console.log(response.data.data.memes);
+            setMemes(response.data.data.memes);
+            setError(null);
+        } catch (err) {
+            setError(err.message);
+            setMemes(null);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    function textReplacer() {
+        let replacer = {};
+        for (let i = 0; i < Object.keys(text).length; i++) {
+            replacer[i] = '';
+        }
+        setText(replacer);
     }
-  };
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    console.log();
-    axios.post(
-			"https://api.imgflip.com/caption_image",
-			{
-				form: {
-					template_id: '181913649',
-					username: 'USERNAME',
-					password: 'PASSWORD',
-					text0: 'text0',
-					text1: 'text1',
-				},
-			}
-		)
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-    setTextOne('');
-    setTextTwo('');
-  }
-
-  function handleChangeOne(event) {
-    setTextOne(event.target.value.toUpperCase());
-  }
-
-  function handleChangeTwo(event) {
-    setTextTwo(event.target.value.toUpperCase());
-  }
-
-  function onPrevious() {
-    getData();
-    setCurrentMeme(prev => prev-1);
-    setTextOne('');
-    setTextTwo('');
-  }
-
-  function onNext() {
-    getData();
-    setCurrentMeme(prev => prev+1);
-    setTextOne('');
-    setTextTwo('');
-  }
-
-  function onRandom() {
-    getData();
-    setCurrentMeme(Math.floor(Math.random() * 100));
-    setTextOne('');
-    setTextTwo('');
-  }
-
-  function onUpload() {
-    if(document.getElementById('input').files[0]) {
-    const fileURL = URL.createObjectURL(document.getElementById('input').files[0]);
-    console.log(fileURL);
-    setMemes([{url: fileURL}]);
+    function handleSubmit(event) {
+        event.preventDefault();
+        let postOptions = {
+            template_id: memes[currentMeme].id,
+            username: username,
+            password: password,
+            font: 'impact',
+        };
+        for (let i = 0; i < Object.keys(text).length; i++) {
+            postOptions[`text${i}`] = text[i];
+        }
+        textReplacer();
+        axios
+            .post('https://api.imgflip.com/caption_image', postOptions, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            })
+            .then(function (response) {
+                console.log(JSON.parse(response.request.response));
+                let { data } = JSON.parse(response.request.response);
+                setCustomMeme(data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
-  }
 
-  function onDownload() {
-    domtoimage.toJpeg(document.getElementById('meme'), { quality: 0.95 })
-    .then(function (dataUrl) {
-        var link = document.createElement('a');
-        link.download = 'my-meme.jpeg';
-        link.href = dataUrl;
-        link.click();
-    });
-  }
+    function handleChange(index, event) {
+        setText({ ...text, [index]: event.target.value.toUpperCase() });
+    }
 
-  return (
-    <div className="page-container">
-      <h1>Meme Generator</h1>
+    function onPrevious() {
+        getData();
+        setCurrentMeme((prev) => prev - 1);
+        setCustomMeme();
+        textReplacer();
+    }
 
-      <form onSubmit={handleSubmit}>
-        <div className='text-input'>
-          <label htmlFor='above'>Text above: </label>
-          <input onChange={handleChangeOne} name='above' type='text' value={textOne}></input>
-        </div>
-        <div className='text-input'>
-         <label htmlFor='below'>Text below: </label>
-          <input onChange={handleChangeTwo} name='below' type='text' value={textTwo}></input><br/>
-        </div>
-        <input type='submit' value='generate'></input>
-      </form>
+    function onNext() {
+        getData();
+        setCurrentMeme((prev) => prev + 1);
+        setCustomMeme();
+        textReplacer();
+    }
 
-      <div className='interaction'>
-        <div className='upload'>    
-          <label for="file-upload" class="custom-file-upload" >
-            Upload your own template:
-            <br/>
-            <input name='file-upload' type="file" id="input" multiple />
-          </label>
-          <button onClick={onUpload}>upload</button>
-        </div>
+    function onRandom() {
+        getData();
+        setCurrentMeme(Math.floor(Math.random() * 100));
+        setCustomMeme();
+        textReplacer();
+    }
 
-        <div className='download'>
-          <label for="file-download" class="custom-file-download" >
-            Download your meme:
-            <br/>
-            <button  onClick={onDownload} name='file-download'>download</button>
-          </label>    
-        </div>
-      </div>
+    function onUpload() {
+        if (document.getElementById('input').files[0]) {
+            const fileURL = URL.createObjectURL(
+                document.getElementById('input').files[0]
+            );
+            console.log(fileURL);
+            setMemes([{ url: fileURL }]);
+        }
+    }
 
-      {loading && <span>Loading</span>}
-        {memes[currentMeme] && <div className='border'>
-        <div className='meme' id='meme'>
-          <img src={memes[currentMeme].url} alt=''/>
-          <div className='overlay'>
-          <span className='text'>{textOne}</span>
-          <span className='text'>{textTwo}</span>
-          </div>
-        </div>
-        </div>}
+    function onDownload() {
+        domtoimage
+            .toJpeg(document.getElementById('meme'), { quality: 0.95 })
+            .then(function (dataUrl) {
+                var link = document.createElement('a');
+                link.download = 'my-meme.jpeg';
+                link.href = dataUrl;
+                link.click();
+            });
+    }
 
-      <div className='navigation'>
-        <div>
-          {currentMeme-1 !== -1 && <button onClick={onPrevious}>previous</button>}
-          {currentMeme+1 !== 100 &&<button onClick={onNext}>next</button>}
-        </div>
-        <div>
-          <button onClick={onRandom}>random</button>
-        </div>
-      </div>
-    </div>
-  );
+    function printBoxes(number) {
+        let array = [];
+        for (let i = 1; i <= number; i++) {
+            array.push('box' + i);
+        }
+        return array;
+    }
+
+    if (memes)
+        return (
+            <div className="page-container">
+                <h1>Meme Generator</h1>
+
+                <form onSubmit={handleSubmit}>
+                    {printBoxes(memes[currentMeme].box_count).map(
+                        (element, index) => (
+                            <div className="text-input">
+                                <label htmlFor="above">
+                                    Textbox {index + 1}:{' '}
+                                </label>
+                                <input
+                                    onChange={(event) =>
+                                        handleChange(index, event)
+                                    }
+                                    name="above"
+                                    type="text"
+                                    value={text[index]}></input>
+                            </div>
+                        )
+                    )}
+                    <input type="submit" value="generate"></input>
+                </form>
+
+                <div className="interaction">
+                    <div className="upload">
+                        <label for="file-upload" class="custom-file-upload">
+                            Upload your own template:
+                            <br />
+                            <input
+                                name="file-upload"
+                                type="file"
+                                id="input"
+                                multiple
+                            />
+                        </label>
+                        <button onClick={onUpload}>upload</button>
+                    </div>
+
+                    <div className="download">
+                        <label for="file-download" class="custom-file-download">
+                            Download your meme:
+                            <br />
+                            <button onClick={onDownload} name="file-download">
+                                download
+                            </button>
+                        </label>
+                    </div>
+                </div>
+
+                {loading && <span>Loading</span>}
+                {memes[currentMeme] && (
+                    <div className="border">
+                        <div className="meme" id="meme">
+                            <img
+                                src={customMeme?.url || memes[currentMeme].url}
+                                alt=""
+                            />
+                            {memes[currentMeme].box_count === 2 && (
+                                <div className="overlay">
+                                    <span className="text">{text[0]}</span>
+                                    <span className="text">{text[1]}</span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+
+                <div className="navigation">
+                    <div>
+                        {currentMeme - 1 !== -1 && (
+                            <button onClick={onPrevious}>previous</button>
+                        )}
+                        {currentMeme + 1 !== 100 && (
+                            <button onClick={onNext}>next</button>
+                        )}
+                    </div>
+                    <div>
+                        <button onClick={onRandom}>random</button>
+                    </div>
+                </div>
+            </div>
+        );
 }
 
 export default App;
+
+/**
+ * 
+<div className="text-input">
+                        <label htmlFor="above">Text above: </label>
+                        <input
+                            onChange={handleChangeOne}
+                            name="above"
+                            type="text"
+                            value={textOne}></input>
+                    </div>
+                    <div className="text-input">
+                        <label htmlFor="below">Text below: </label>
+                        <input
+                            onChange={handleChangeTwo}
+                            name="below"
+                            type="text"
+                            value={textTwo}></input>
+                        <br />
+                    </div>
+
+ */
