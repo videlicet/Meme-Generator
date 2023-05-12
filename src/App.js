@@ -59,7 +59,6 @@ function App() {
                 },
             })
             .then(function (response) {
-                console.log(JSON.parse(response.request.response));
                 let { data } = JSON.parse(response.request.response);
                 setCustomMeme(data);
             })
@@ -232,25 +231,3 @@ function App() {
 }
 
 export default App;
-
-/**
- * 
-<div className="text-input">
-                        <label htmlFor="above">Text above: </label>
-                        <input
-                            onChange={handleChangeOne}
-                            name="above"
-                            type="text"
-                            value={textOne}></input>
-                    </div>
-                    <div className="text-input">
-                        <label htmlFor="below">Text below: </label>
-                        <input
-                            onChange={handleChangeTwo}
-                            name="below"
-                            type="text"
-                            value={textTwo}></input>
-                        <br />
-                    </div>
-
- */
