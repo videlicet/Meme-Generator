@@ -21,7 +21,7 @@ For memes with more than two text boxes or two with off-pattern placement, pleas
 
 ## Ho to Set Up
 
-Make sure to provide the username and password from your own <a href= https://imgflip.com/api> imgflip account</a> to a `credentials.js` file as shown in the `credentials (example).js` file if you want to use the generate button function.
+Make sure to provide the username and password from your own <a href= https://imgflip.com/api> imgflip account</a> to a `.env` file as shown in the `.env (example)` file if you want to use the generate button function.
 
 ## Acknowledgements
 

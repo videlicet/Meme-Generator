@@ -3,7 +3,7 @@ import './App.css';
 import domtoimage from 'dom-to-image';
 import axios from 'axios';
 
-import { username, password } from './credentials';
+//import { username, password } from './credentials';
 
 function App() {
     const [memes, setMemes] = useState();
@@ -44,8 +44,8 @@ function App() {
         event.preventDefault();
         let postOptions = {
             template_id: memes[currentMeme].id,
-            username: process.env.USERNAME || username,
-            password: process.env.PASSWORD || password,
+            username: process.env.REACT_APP_USERNAME, //|| username
+            password: process.env.REACT_APP_PASSWORD, // || password
             font: 'impact',
         };
         for (let i = 0; i < Object.keys(text).length; i++) {
