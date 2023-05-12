@@ -8,7 +8,7 @@ A meme generator that let's you put your own text on classic memes.
     
     Or: 
     
-    Click <b>generate</b> to generate a meme according to it's respective text-box-pattern (see Caveats).
+    Click <b>generate</b> to generate a meme according to its respective text-box-pattern (see Caveats).
 3. Click <b>upload</b> to upload your own meme template and repeat steps 1 and 2 (this will only work well with meme formats with two text boxes in the iconic top-bottom pattern).  
 
 ## Caveats
