@@ -146,32 +146,39 @@ function App() {
                             </div>
                         )
                     )}
-                    <input type="submit" value="generate"></input>
+                    <input type="submit" value="generate" style={{width: "5rem"}}></input>
                 </form>
-
-                <div className="interaction">
-                    <div className="upload">
-                        <label for="file-upload" class="custom-file-upload">
-                            Upload your own template:
-                            <br />
-                            <input
-                                name="file-upload"
-                                type="file"
-                                id="input"
-                                multiple
-                            />
-                        </label>
-                        <button onClick={onUpload}>upload</button>
+                <div className="interaction-container">
+                    <div className="interaction">
+                        <div className="upload">
+                            <label for="file-upload" class="custom-file-upload">
+                                Upload your own template:
+                                <br /><br />
+                                <input
+                                    name="file-upload"
+                                    type="file"
+                                    id="input"
+                                    multiple
+                                />
+                            </label>
+                            <button onClick={onUpload}>upload</button>
+                        </div>
                     </div>
 
-                    <div className="download">
-                        <label for="file-download" class="custom-file-download">
-                            Download your meme:
-                            <br />
-                            <button onClick={onDownload} name="file-download">
-                                download
-                            </button>
-                        </label>
+                    <div className="interaction">
+                        <div className="download">
+                            <label
+                                for="file-download"
+                                class="custom-file-download">
+                                Download your meme:
+                                <br /><br />
+                                <button
+                                    onClick={onDownload}
+                                    name="file-download">
+                                    download
+                                </button>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
