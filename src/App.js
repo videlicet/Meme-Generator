@@ -98,7 +98,7 @@ function App() {
             const fileURL = URL.createObjectURL(
                 document.getElementById('input').files[0]
             );
-            setMemes([{ url: fileURL }]);
+            setMemes([{ url: fileURL, box_count: 2 }]);
         }
     }
 
@@ -143,14 +143,18 @@ function App() {
                             </div>
                         )
                     )}
-                    <input type="submit" value="generate" style={{width: "5rem"}}></input>
+                    <input
+                        type="submit"
+                        value="generate"
+                        style={{ width: '5rem' }}></input>
                 </form>
                 <div className="interaction-container">
                     <div className="interaction">
                         <div className="upload">
                             <label for="file-upload" class="custom-file-upload">
                                 Upload your own template:
-                                <br /><br />
+                                <br />
+                                <br />
                                 <input
                                     name="file-upload"
                                     type="file"
@@ -168,7 +172,8 @@ function App() {
                                 for="file-download"
                                 class="custom-file-download">
                                 Download your meme:
-                                <br /><br />
+                                <br />
+                                <br />
                                 <button
                                     onClick={onDownload}
                                     name="file-download">
@@ -197,19 +202,31 @@ function App() {
                     </div>
                 )}
 
-                <div className="navigation">
-                    <div>
-                        {currentMeme - 1 !== -1 && (
-                            <button onClick={onPrevious}>previous</button>
-                        )}
-                        {currentMeme + 1 !== 100 && (
-                            <button onClick={onNext}>next</button>
-                        )}
+                {memes[currentMeme + 1] && (
+                    <div className="navigation">
+                        <div>
+                            {currentMeme - 1 !== -1 && (
+                                <button onClick={onPrevious}>previous</button>
+                            )}
+                            {currentMeme + 1 !== 100 && (
+                                <button onClick={onNext}>next</button>
+                            )}
+                        </div>
+                        <div>
+                            <button onClick={onRandom}>random</button>
+                        </div>
                     </div>
-                    <div>
-                        <button onClick={onRandom}>random</button>
+                )}
+
+                {!memes[currentMeme + 1] && (
+                    <div className="navigation">
+                        <div>
+                            <a href="/">
+                                <button>back</button>
+                            </a>
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         );
 }
