@@ -2,6 +2,10 @@
 
 A meme generator that let's you put your own text on classic memes.
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/073620b0-e979-41b7-9fb6-15b8192a002f/deploy-status)](https://app.netlify.com/sites/meme-generator-videlicet/deploys)
+
+Site down? Let me know!
+
 ## How to Use
 1. Type your text into the corresponding textbox inputs.
 2. Click <b>download</b> to download the image as previewed (best for meme formats with two text boxes in the iconic top-bottom pattern, see Caveats). 
