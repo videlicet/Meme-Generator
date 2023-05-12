@@ -18,8 +18,6 @@ function App() {
             const response = await axios.get(
                 `https://api.imgflip.com/get_memes`
             );
-            console.log(response.data);
-            console.log(response.data.data.memes);
             setMemes(response.data.data.memes);
             setError(null);
         } catch (err) {
@@ -46,8 +44,8 @@ function App() {
         event.preventDefault();
         let postOptions = {
             template_id: memes[currentMeme].id,
-            username: username,
-            password: password,
+            username: process.env.USERNAME || username,
+            password: process.env.PASSWORD || password,
             font: 'impact',
         };
         for (let i = 0; i < Object.keys(text).length; i++) {
@@ -100,7 +98,6 @@ function App() {
             const fileURL = URL.createObjectURL(
                 document.getElementById('input').files[0]
             );
-            console.log(fileURL);
             setMemes([{ url: fileURL }]);
         }
     }
